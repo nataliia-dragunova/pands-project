@@ -13,9 +13,9 @@ Exploring Iris Dataset
 
 - Nominal categorical variables
 - Continuous numerical variables
-- Summary of every in a single text file
+- Summary of every variable in a single text file
 - Histogram for each variable to png files
-- Scatter plot of each paior of variables
+- Scatter plot of each pair of variables
 
 3. Dataset Analysing
 
