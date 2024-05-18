@@ -1,13 +1,14 @@
-# Project Plan for 
+"The Iris flower, immortalized in Fisher's pioneering dataset, blooms as a symbol of scientific discovery and the elegant intersection of nature and data." ChatGPT
 
-Exploring Iris Dataset
+# Anderson's/Fisher's Iris Data Set for analysing in Python
+
+# Exploring Iris Dataset in Jupyter Notebook
 
 1. Dataset Information
 
 - Iris Dataset
-- Open Source article
+- Open Source articles
 - Data citations
-- Header image
 
 2. Dataset Typology
 
