@@ -1,5 +1,5 @@
 # Anderson's/Fisher's Iris Data Set analysis
-# author : Nataliia Dragunova
+# author : Nataliia Dragunova + ChatGPT
 
 # Load libraries that perspectively will be used in analysis
 import pandas as pd
@@ -21,35 +21,40 @@ for column in iris_df.columns:
     filename = f"{column}.txt"
     iris_df[column].to_csv(filename, index=False, header=True)
 
-# Using a continues numerical variable 'petal_length' for creating a Histogram 'Iris petal length'
-fig, ax = plt.subplots()
 
-x = iris_df['petal_length']
-plt.hist(x)
+# Set the aesthetics for the plots in seaborn
+sns.set(style="whitegrid")
 
-ax.set_ylabel('population')
-ax.set_title('Iris petal length')
+# Get the unique classes (species)
+classes = iris_df['class'].unique()
 
-plt.savefig("Iris petal length.png")
+# Iterate through each class and each numeric column
+for cls in classes:
+    class_df = iris_df[iris_df['class'] == cls]  # Filter the dataframe for the current class
+    for column in iris_df.columns[:-1]:  # Exclude the 'class' column for individual histograms
+        plt.figure(figsize=(10, 6))  # Set the size of the figure
+        sns.histplot(class_df[column], bins=20, kde=False, color='blue')
+        plt.title(f'Histogram of {column} for {cls}')
+        plt.xlabel(column)
+        plt.ylabel('Population')
+        # Save each histogram as a .png file, including the class name in the filename
+        plt.savefig(f'{cls}_{column}_histogram.png')
 
-# Map species to more readable labels
-species_mapping = {'Iris-setosa': 'setosa', 'Iris-versicolor': 'versicolor', 'Iris-virginica': 'virginica'}
-iris_df['class'] = iris_df['class'].map(species_mapping)
+# Define the pairs of variables to plot
+variable_pairs = [('petal_length', 'petal_width'), ('sepal_length', 'sepal_width')]
 
-# Define the feature names
-feature_names = column_names[:-1]  # Exclude the species column
-species_names = iris_df['class'].unique()
+# Get the unique classes (species)
+classes = iris_df['class'].unique()
 
-# Plot histograms
-plt.figure(figsize=(18, 12))
-for i, species in enumerate(species_names):
-    for j, feature in enumerate(feature_names):
-        plt.subplot(3, 4, i * 4 + j + 1)
-        subset = iris_df[iris_df['class'] == species]
-        plt.hist(subset[feature], bins=20, color='blue', edgecolor='black')
-        plt.title(f'Histogram of {feature}\nfor {species}')
-        plt.xlabel(feature)
-        plt.ylabel('Frequency')
-plt.tight_layout()
-plt.show()
-
+# Loop through each class and each pair of variables
+for cls in classes:
+    class_df = iris_df[iris_df['class'] == cls]  # Filter the dataframe for the current class
+    for (x_col, y_col) in variable_pairs:
+        plt.figure(figsize=(10, 6))
+        sns.scatterplot(data=class_df, x=x_col, y=y_col, hue='class', palette='Set1', s=100, edgecolor='black')
+        plt.title(f'Scatter Plot of {x_col} vs {y_col} for {cls}')
+        plt.xlabel(x_col)
+        plt.ylabel(y_col)
+        plt.legend(title='Class')
+        # Save each scatter plot as a .png file, including the class name and variable names in the filename
+        plt.savefig(f'{cls}_{x_col}_vs_{y_col}_scatter.png')
